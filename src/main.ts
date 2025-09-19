@@ -5,6 +5,12 @@ import * as dotenv from 'dotenv';
 // Cargar variables de entorno
 dotenv.config();
 
+// Polyfill para crypto.randomUUID en Node.js 18
+if (!globalThis.crypto) {
+  const { webcrypto } = require('crypto');
+  globalThis.crypto = webcrypto;
+}
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
