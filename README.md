@@ -14,6 +14,7 @@ Un servidor backend desarrollado con NestJS para un sistema de billetera digital
 
 - Node.js (versión 16 o superior)
 - npm o yarn
+- PostgreSQL (versión 12 o superior)
 
 ## 🛠️ Instalación
 
@@ -27,6 +28,20 @@ cd SWallet
 ```bash
 npm install
 ```
+
+3. Configura PostgreSQL:
+   - Instala PostgreSQL en tu sistema
+   - Crea una base de datos llamada `swallet`
+   - Ejecuta el script de inicialización:
+   ```bash
+   psql -U postgres -f scripts/init-db.sql
+   ```
+
+4. Configura las variables de entorno:
+   ```bash
+   cp env.example .env
+   ```
+   Edita el archivo `.env` con tus credenciales de PostgreSQL.
 
 ## 🏃‍♂️ Ejecución
 
@@ -60,9 +75,18 @@ npm run test:watch
 
 Una vez que el servidor esté ejecutándose, puedes acceder a:
 
+### Endpoints Generales
 - **GET** `/api` - Mensaje de bienvenida
 - **GET** `/api/health` - Estado del servidor
 - **GET** `/api/info` - Información de la aplicación
+
+### Endpoints de Usuarios
+- **GET** `/api/users` - Listar todos los usuarios
+- **GET** `/api/users/stats` - Estadísticas de usuarios
+- **GET** `/api/users/:id` - Obtener usuario por ID
+- **POST** `/api/users` - Crear nuevo usuario
+- **PATCH** `/api/users/:id` - Actualizar usuario
+- **DELETE** `/api/users/:id` - Eliminar usuario
 
 ## 🏗️ Estructura del Proyecto
 
@@ -74,7 +98,17 @@ src/
 │   └── app.module.ts        # Módulo principal
 ├── common/                  # Utilidades comunes
 ├── config/
-│   └── app.config.ts        # Configuración de la aplicación
+│   ├── app.config.ts        # Configuración de la aplicación
+│   └── database.config.ts   # Configuración de PostgreSQL
+├── database/
+│   └── database.module.ts   # Módulo de base de datos
+├── entities/
+│   └── user.entity.ts       # Entidad de usuario
+├── modules/
+│   └── users/
+│       ├── users.controller.ts
+│       ├── users.service.ts
+│       └── users.module.ts
 └── main.ts                  # Punto de entrada
 ```
 
@@ -84,13 +118,15 @@ El servidor se ejecuta por defecto en el puerto `3000`. Puedes cambiar esto modi
 
 ## 📝 Próximos Pasos
 
+- [x] Conectar base de datos PostgreSQL
+- [x] Crear módulo de usuarios con CRUD completo
 - [ ] Implementar autenticación JWT
-- [ ] Conectar base de datos MongoDB
-- [ ] Crear módulos de usuarios y transacciones
-- [ ] Implementar validación de datos
+- [ ] Crear módulos de transacciones y billeteras
+- [ ] Implementar validación de datos con DTOs
 - [ ] Agregar tests unitarios y de integración
 - [ ] Configurar logging
 - [ ] Implementar rate limiting
+- [ ] Agregar documentación con Swagger
 
 ## 🤝 Contribución
 

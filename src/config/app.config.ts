@@ -16,12 +16,19 @@ export const appConfig = {
     allowedHeaders: ['Content-Type', 'Authorization'],
   },
   
-  // Configuración de base de datos (para futuras implementaciones)
+  // Configuración de base de datos PostgreSQL
   database: {
-    url: process.env.DATABASE_URL || 'mongodb://localhost:27017/swallet',
+    type: 'postgres',
     host: process.env.DATABASE_HOST || 'localhost',
-    port: parseInt(process.env.DATABASE_PORT || '27017'),
-    name: process.env.DATABASE_NAME || 'swallet',
+    port: parseInt(process.env.DATABASE_PORT || '5432'),
+    username: process.env.DATABASE_USERNAME || 'postgres',
+    password: process.env.DATABASE_PASSWORD || 'password',
+    database: process.env.DATABASE_NAME || 'swallet',
+    synchronize: process.env.NODE_ENV === 'development',
+    logging: process.env.NODE_ENV === 'development',
+    entities: [__dirname + '/../**/*.entity{.ts,.js}'],
+    migrations: [__dirname + '/../migrations/*{.ts,.js}'],
+    migrationsRun: true,
   },
   
   // Configuración JWT (para autenticación futura)

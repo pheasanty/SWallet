@@ -22,7 +22,13 @@ export class AppService {
       description: 'Sistema de billetera digital',
       environment: process.env.NODE_ENV || 'development',
       nodeVersion: process.version,
-      platform: process.platform
+      platform: process.platform,
+      database: {
+        type: 'PostgreSQL',
+        host: process.env.DATABASE_HOST || 'localhost',
+        port: process.env.DATABASE_PORT || '5432',
+        name: process.env.DATABASE_NAME || 'swallet',
+      }
     };
   }
 }

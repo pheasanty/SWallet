@@ -1,0 +1,24 @@
+services:
+  - type: web
+    name: swallet-api
+    env: node
+    plan: free
+    buildCommand: npm install && npm run build
+    startCommand: npm run start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: DATABASE_HOST
+        value: aws-1-us-east-2.pooler.supabase.com
+      - key: DATABASE_PORT
+        value: 6543
+      - key: DATABASE_USERNAME
+        value: postgres.imiuvmyepfedjbhayiha
+      - key: DATABASE_PASSWORD
+        value: jjjd18092025
+      - key: DATABASE_NAME
+        value: postgres
+      - key: JWT_SECRET
+        value: your-super-secret-jwt-key-for-production
