@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { Repository, DeepPartial } from 'typeorm';
 
 export abstract class BaseService<T> {
   constructor(protected readonly repository: Repository<T>) {}
@@ -11,13 +11,13 @@ export abstract class BaseService<T> {
     return this.repository.findOne({ where: { id } as any });
   }
 
-  async create(data: Partial<T>): Promise<T> {
+  async create(data: DeepPartial<T>): Promise<T> {
     const entity = this.repository.create(data);
     return this.repository.save(entity);
   }
 
-  async update(id: number, data: Partial<T>): Promise<T | null> {
-    await this.repository.update(id, data);
+  async update(id: number, data: DeepPartial<T>): Promise<T | null> {
+    await this.repository.update(id, data as any);
     return this.findById(id);
   }
 
