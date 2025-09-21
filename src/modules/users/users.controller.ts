@@ -9,7 +9,7 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { UsersService } from './users.service';
+import { UsersService } from '../../services/users.service';
 import { User } from '../../entities/user.entity';
 
 @Controller('users')
@@ -25,23 +25,24 @@ export class UsersController {
   @Get()
   async findAll() {
     const users = await this.usersService.findAll();
-    const total = await this.usersService.getTotalUsers();
-    const active = await this.usersService.getActiveUsers();
+    const total = await this.usersService.count();
+    const activeUsers = await this.usersService.findActiveUsers();
     
     return {
       data: users,
       meta: {
         total,
-        active,
-        inactive: total - active,
+        active: activeUsers.length,
+        inactive: total - activeUsers.length,
       },
     };
   }
 
   @Get('stats')
   async getStats() {
-    const total = await this.usersService.getTotalUsers();
-    const active = await this.usersService.getActiveUsers();
+    const total = await this.usersService.count();
+    const activeUsers = await this.usersService.findActiveUsers();
+    const active = activeUsers.length;
     
     return {
       totalUsers: total,
@@ -53,7 +54,7 @@ export class UsersController {
 
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    const user = await this.usersService.findOne(id);
+    const user = await this.usersService.findById(parseInt(id));
     if (!user) {
       return {
         error: 'Usuario no encontrado',
@@ -65,7 +66,7 @@ export class UsersController {
 
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: Partial<User>) {
-    const user = await this.usersService.update(id, updateUserDto);
+    const user = await this.usersService.update(parseInt(id), updateUserDto);
     if (!user) {
       return {
         error: 'Usuario no encontrado',
@@ -78,6 +79,6 @@ export class UsersController {
   @Delete(':id')
   @HttpCode(HttpStatus.NO_CONTENT)
   async remove(@Param('id') id: string) {
-    await this.usersService.remove(id);
+    await this.usersService.delete(parseInt(id));
   }
 }

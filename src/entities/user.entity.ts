@@ -5,13 +5,17 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   Index,
+  OneToMany,
 } from 'typeorm';
+import { Wallet } from './wallet.entity';
+import { AuditLog } from './audit-log.entity';
+import { UserSession } from './user-session.entity';
 
 @Entity('users')
 @Index(['email'], { unique: true })
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
+  @PrimaryGeneratedColumn()
+  id: number;
 
   @Column({ type: 'varchar', length: 100 })
   firstName: string;
@@ -42,6 +46,16 @@ export class User {
 
   @UpdateDateColumn()
   updatedAt: Date;
+
+  // Relaciones
+  @OneToMany(() => Wallet, wallet => wallet.user)
+  wallets: Wallet[];
+
+  @OneToMany(() => AuditLog, auditLog => auditLog.user)
+  auditLogs: AuditLog[];
+
+  @OneToMany(() => UserSession, session => session.user)
+  sessions: UserSession[];
 
   // Método para obtener el nombre completo
   get fullName(): string {

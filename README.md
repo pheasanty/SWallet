@@ -91,35 +91,83 @@ Una vez que el servidor esté ejecutándose, puedes acceder a:
 ## 🏗️ Estructura del Proyecto
 
 ```
-src/
-├── app/
-│   ├── app.controller.ts    # Controlador principal
-│   ├── app.service.ts       # Servicio principal
-│   └── app.module.ts        # Módulo principal
-├── common/                  # Utilidades comunes
-├── config/
-│   ├── app.config.ts        # Configuración de la aplicación
-│   └── database.config.ts   # Configuración de PostgreSQL
-├── database/
-│   └── database.module.ts   # Módulo de base de datos
-├── entities/
-│   └── user.entity.ts       # Entidad de usuario
-├── modules/
-│   └── users/
-│       ├── users.controller.ts
-│       ├── users.service.ts
-│       └── users.module.ts
-└── main.ts                  # Punto de entrada
+SWallet/
+├── src/                    # Código fuente de NestJS
+│   ├── app/
+│   │   ├── app.controller.ts    # Controlador principal
+│   │   ├── app.service.ts       # Servicio principal
+│   │   └── app.module.ts        # Módulo principal
+│   ├── common/                  # Utilidades comunes
+│   ├── config/
+│   │   ├── app.config.ts        # Configuración de la aplicación
+│   │   └── database.config.ts   # Configuración de PostgreSQL
+│   ├── database/
+│   │   └── database.module.ts   # Módulo de base de datos
+│   ├── entities/
+│   │   └── user.entity.ts       # Entidad de usuario
+│   ├── modules/
+│   │   └── users/
+│   │       ├── users.controller.ts
+│   │       ├── users.service.ts
+│   │       └── users.module.ts
+│   └── main.ts                  # Punto de entrada
+├── keep-alive-scripts/     # Sistema de keep-alive (Python)
+│   ├── swallet-keep-alive-fixed.py    # Script principal sin emojis
+│   ├── start-swallet-keep-alive-fixed.bat  # Script de inicio
+│   ├── test-ping-fixed.py              # Script de prueba
+│   ├── install.bat                     # Instalación automática
+│   ├── cleanup.bat                     # Limpieza de archivos
+│   └── README.md                       # Documentación del sistema
+├── scripts/                # Scripts de base de datos
+├── package.json           # Dependencias de Node.js
+├── render.yaml           # Configuración de Render
+└── README.md             # Este archivo
 ```
 
 ## 🔧 Configuración
 
 El servidor se ejecuta por defecto en el puerto `3000`. Puedes cambiar esto modificando la variable de entorno `PORT` o editando `src/config/app.config.ts`.
 
+## 🚀 Sistema Keep-Alive
+
+El proyecto incluye un sistema de keep-alive desarrollado en Python para mantener activa la API en Render.
+
+### Características:
+- Pings automáticos cada 25 minutos (modo producción)
+- Monitoreo de múltiples endpoints
+- Logging completo
+- Manejo de errores robusto
+- Configuración flexible
+
+### Uso:
+```bash
+cd keep-alive-scripts
+# Script principal sin emojis (recomendado)
+python swallet-keep-alive-fixed.py production
+
+# O con interfaz gráfica
+start-swallet-keep-alive-fixed.bat
+```
+
+### Verificar Estado:
+```bash
+cd keep-alive-scripts
+python test-ping-fixed.py
+```
+
+## 🌐 Despliegue
+
+El proyecto está desplegado en Render con:
+- **API:** https://swallet-troe.onrender.com
+- **Base de datos:** PostgreSQL en Supabase
+- **Keep-alive:** Sistema automático para mantener la API activa
+
 ## 📝 Próximos Pasos
 
 - [x] Conectar base de datos PostgreSQL
 - [x] Crear módulo de usuarios con CRUD completo
+- [x] Desplegar en Render
+- [x] Implementar sistema de keep-alive
 - [ ] Implementar autenticación JWT
 - [ ] Crear módulos de transacciones y billeteras
 - [ ] Implementar validación de datos con DTOs
