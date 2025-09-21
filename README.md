@@ -1,189 +1,123 @@
-# SWallet - Sistema de Billetera Digital
+# SWallet - Digital Wallet API
 
-Un servidor backend desarrollado con NestJS para un sistema de billetera digital.
+A comprehensive digital wallet system built with NestJS and TypeORM, supporting multiple blockchain networks.
 
-## 🚀 Características
+## 🚀 Quick Deploy on Render
 
-- **Framework**: NestJS con TypeScript
-- **Arquitectura**: Modular y escalable
-- **API REST**: Endpoints bien estructurados
-- **CORS**: Habilitado para desarrollo
-- **Configuración**: Flexible y extensible
+### Option 1: Using render.yaml (Recommended)
+1. Push your code to GitHub
+2. Connect your repository to Render
+3. Render will automatically detect the `render.yaml` file and configure everything
 
-## 📋 Requisitos
+### Option 2: Manual Setup
+1. Create a new Web Service on Render
+2. Connect your GitHub repository
+3. Configure the following settings:
 
-- Node.js (versión 16 o superior)
-- npm o yarn
-- PostgreSQL (versión 12 o superior)
-
-## 🛠️ Instalación
-
-1. Clona el repositorio:
-```bash
-git clone <tu-repositorio>
-cd SWallet
-```
-
-2. Instala las dependencias:
+**Build Command:**
 ```bash
 npm install
 ```
 
-3. Configura PostgreSQL:
-   - Instala PostgreSQL en tu sistema
-   - Crea una base de datos llamada `swallet`
-   - Ejecuta el script de inicialización:
-   ```bash
-   psql -U postgres -f scripts/init-db.sql
-   ```
+**Start Command:**
+```bash
+npm run start:prod
+```
 
-4. Configura las variables de entorno:
-   ```bash
-   cp env.example .env
-   ```
-   Edita el archivo `.env` con tus credenciales de PostgreSQL.
+**Environment Variables:**
+- `NODE_ENV=production`
+- `DATABASE_URL` (automatically provided by Render PostgreSQL)
+- `PORT=10000`
 
-## 🏃‍♂️ Ejecución
+### Database Setup
+1. Create a PostgreSQL database on Render
+2. The `DATABASE_URL` will be automatically provided
+3. Migrations will run automatically on deployment
 
-### Desarrollo
+## 🏗️ Local Development
+
+### Prerequisites
+- Node.js 18+
+- PostgreSQL 13+
+- npm or yarn
+
+### Installation
+```bash
+npm install
+```
+
+### Environment Setup
+Create a `.env` file:
+```env
+DATABASE_HOST=localhost
+DATABASE_PORT=5432
+DATABASE_USERNAME=your_username
+DATABASE_PASSWORD=your_password
+DATABASE_NAME=swallet
+NODE_ENV=development
+```
+
+### Database Migration
+```bash
+npm run migration:run
+```
+
+### Start Development Server
 ```bash
 npm run start:dev
 ```
 
-### Producción
-```bash
-npm run build
-npm run start:prod
-```
+## 📊 API Endpoints
 
-### Otros comandos
-```bash
-# Construir el proyecto
-npm run build
+- `GET/POST/PUT/DELETE /users` - User management
+- `GET/POST/PUT/DELETE /wallets` - Wallet operations
+- `GET/POST/PUT/DELETE /transactions` - Transaction processing
+- `GET/POST/PUT/DELETE /tokens` - Token management
+- `GET/POST /audit` - Audit logging
+- `GET/POST/PUT/DELETE /sessions` - Session management
+- `GET/POST/PUT/DELETE /networks` - Network configuration
 
-# Ejecutar en modo debug
-npm run start:debug
+## 🛠️ Available Scripts
 
-# Ejecutar tests
-npm run test
+- `npm run start:dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start:prod` - Start production server
+- `npm run migration:run` - Run database migrations
+- `npm run migration:generate` - Generate new migration
+- `npm run migration:revert` - Revert last migration
 
-# Ejecutar tests en modo watch
-npm run test:watch
-```
+## 🏛️ Architecture
 
-## 📡 Endpoints Disponibles
+- **Backend**: NestJS + TypeScript
+- **Database**: PostgreSQL with TypeORM
+- **Architecture**: Modular with separation of concerns
+- **Migration**: TypeORM migrations for database versioning
 
-Una vez que el servidor esté ejecutándose, puedes acceder a:
-
-### Endpoints Generales
-- **GET** `/api` - Mensaje de bienvenida
-- **GET** `/api/health` - Estado del servidor
-- **GET** `/api/info` - Información de la aplicación
-
-### Endpoints de Usuarios
-- **GET** `/api/users` - Listar todos los usuarios
-- **GET** `/api/users/stats` - Estadísticas de usuarios
-- **GET** `/api/users/:id` - Obtener usuario por ID
-- **POST** `/api/users` - Crear nuevo usuario
-- **PATCH** `/api/users/:id` - Actualizar usuario
-- **DELETE** `/api/users/:id` - Eliminar usuario
-
-## 🏗️ Estructura del Proyecto
+## 📁 Project Structure
 
 ```
-SWallet/
-├── src/                    # Código fuente de NestJS
-│   ├── app/
-│   │   ├── app.controller.ts    # Controlador principal
-│   │   ├── app.service.ts       # Servicio principal
-│   │   └── app.module.ts        # Módulo principal
-│   ├── common/                  # Utilidades comunes
-│   ├── config/
-│   │   ├── app.config.ts        # Configuración de la aplicación
-│   │   └── database.config.ts   # Configuración de PostgreSQL
-│   ├── database/
-│   │   └── database.module.ts   # Módulo de base de datos
-│   ├── entities/
-│   │   └── user.entity.ts       # Entidad de usuario
-│   ├── modules/
-│   │   └── users/
-│   │       ├── users.controller.ts
-│   │       ├── users.service.ts
-│   │       └── users.module.ts
-│   └── main.ts                  # Punto de entrada
-├── keep-alive-scripts/     # Sistema de keep-alive (Python)
-│   ├── swallet-keep-alive-fixed.py    # Script principal sin emojis
-│   ├── start-swallet-keep-alive-fixed.bat  # Script de inicio
-│   ├── test-ping-fixed.py              # Script de prueba
-│   ├── install.bat                     # Instalación automática
-│   ├── cleanup.bat                     # Limpieza de archivos
-│   └── README.md                       # Documentación del sistema
-├── scripts/                # Scripts de base de datos
-├── package.json           # Dependencias de Node.js
-├── render.yaml           # Configuración de Render
-└── README.md             # Este archivo
+src/
+├── app/                 # Main application module
+├── config/              # Configuration files
+├── database/            # Database configuration
+├── entities/            # TypeORM entities
+├── services/            # Business logic services
+├── modules/             # Feature modules
+└── migrations/          # Database migrations
 ```
 
-## 🔧 Configuración
+## 🔧 Troubleshooting
 
-El servidor se ejecuta por defecto en el puerto `3000`. Puedes cambiar esto modificando la variable de entorno `PORT` o editando `src/config/app.config.ts`.
+### Database Connection Issues
+- Ensure `DATABASE_URL` is set correctly in Render
+- Check that PostgreSQL service is running
+- Verify network connectivity
 
-## 🚀 Sistema Keep-Alive
+### Build Issues
+- Ensure all dependencies are installed
+- Check TypeScript compilation errors
+- Verify environment variables
 
-El proyecto incluye un sistema de keep-alive desarrollado en Python para mantener activa la API en Render.
+## 📝 License
 
-### Características:
-- Pings automáticos cada 25 minutos (modo producción)
-- Monitoreo de múltiples endpoints
-- Logging completo
-- Manejo de errores robusto
-- Configuración flexible
-
-### Uso:
-```bash
-cd keep-alive-scripts
-# Script principal sin emojis (recomendado)
-python swallet-keep-alive-fixed.py production
-
-# O con interfaz gráfica
-start-swallet-keep-alive-fixed.bat
-```
-
-### Verificar Estado:
-```bash
-cd keep-alive-scripts
-python test-ping-fixed.py
-```
-
-## 🌐 Despliegue
-
-El proyecto está desplegado en Render con:
-- **API:** https://swallet-troe.onrender.com
-- **Base de datos:** PostgreSQL en Supabase
-- **Keep-alive:** Sistema automático para mantener la API activa
-
-## 📝 Próximos Pasos
-
-- [x] Conectar base de datos PostgreSQL
-- [x] Crear módulo de usuarios con CRUD completo
-- [x] Desplegar en Render
-- [x] Implementar sistema de keep-alive
-- [ ] Implementar autenticación JWT
-- [ ] Crear módulos de transacciones y billeteras
-- [ ] Implementar validación de datos con DTOs
-- [ ] Agregar tests unitarios y de integración
-- [ ] Configurar logging
-- [ ] Implementar rate limiting
-- [ ] Agregar documentación con Swagger
-
-## 🤝 Contribución
-
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia ISC.
+ISC License
