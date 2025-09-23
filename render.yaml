@@ -3,7 +3,7 @@ services:
     name: swallet-api
     env: node
     plan: free
-    buildCommand: npm install
+    buildCommand: npm ci && npm run build
     startCommand: npm run start:prod
     envVars:
       - key: NODE_ENV
