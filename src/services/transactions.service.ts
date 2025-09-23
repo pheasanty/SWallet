@@ -13,7 +13,7 @@ export class TransactionsService extends BaseService<Transaction> {
     super(transactionRepository);
   }
 
-  async findByWalletId(walletId: number): Promise<Transaction[]> {
+  async findByWalletId(walletId: string): Promise<Transaction[]> {
     return this.transactionRepository.find({ where: { wallet_id: walletId } });
   }
 
@@ -48,7 +48,7 @@ export class TransactionsService extends BaseService<Transaction> {
   }
 
   async createTransaction(
-    walletId: number,
+    walletId: string,
     amount: number,
     toAddress: string,
     network: string,

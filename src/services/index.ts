@@ -8,3 +8,5 @@ export { WalletBalancesService } from './wallet-balances.service';
 export { TransactionFeesService } from './transaction-fees.service';
 export { UserSessionsService } from './user-sessions.service';
 export { NetworkSettingsService } from './network-settings.service';
+export { CryptoService } from './crypto.service';
+export { TransfersService } from './transfers.service';

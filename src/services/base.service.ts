@@ -7,7 +7,7 @@ export abstract class BaseService<T> {
     return this.repository.find();
   }
 
-  async findById(id: number): Promise<T | null> {
+  async findById(id: number | string): Promise<T | null> {
     return this.repository.findOne({ where: { id } as any });
   }
 
@@ -16,12 +16,12 @@ export abstract class BaseService<T> {
     return this.repository.save(entity);
   }
 
-  async update(id: number, data: DeepPartial<T>): Promise<T | null> {
+  async update(id: number | string, data: DeepPartial<T>): Promise<T | null> {
     await this.repository.update(id, data as any);
     return this.findById(id);
   }
 
-  async delete(id: number): Promise<boolean> {
+  async delete(id: number | string): Promise<boolean> {
     const result = await this.repository.delete(id);
     return result.affected > 0;
   }

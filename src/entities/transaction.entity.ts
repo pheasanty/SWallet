@@ -16,8 +16,8 @@ export class Transaction {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'integer' })
-  wallet_id: number;
+  @Column({ type: 'uuid' })
+  wallet_id: string;
 
   @Column({ type: 'varchar', length: 255, nullable: true })
   tx_hash: string;

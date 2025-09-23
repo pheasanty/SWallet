@@ -15,8 +15,8 @@ export class WalletBalance {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ type: 'integer' })
-  wallet_id: number;
+  @Column({ type: 'uuid' })
+  wallet_id: string;
 
   @Column({ type: 'integer' })
   token_id: number;

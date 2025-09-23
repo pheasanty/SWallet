@@ -1,5 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
+import { appConfig } from './config/app.config';
 import * as dotenv from 'dotenv';
 
 // Cargar variables de entorno
@@ -14,8 +15,13 @@ if (!globalThis.crypto) {
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   
-  // Habilitar CORS
-  app.enableCors();
+  // Habilitar CORS con configuración
+  app.enableCors({
+    origin: appConfig.cors.origin,
+    methods: appConfig.cors.methods as any,
+    allowedHeaders: appConfig.cors.allowedHeaders,
+    credentials: true,
+  });
   
   // Configurar prefijo global para todas las rutas
   app.setGlobalPrefix('api');

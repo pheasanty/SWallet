@@ -14,9 +14,13 @@ import { WalletBalance } from './wallet-balance.entity';
 
 @Entity('wallets')
 @Index(['address', 'network'], { unique: true })
+@Index(['wallet_id'], { unique: true })
 export class Wallet {
-  @PrimaryGeneratedColumn()
-  id: number;
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({ type: 'varchar', length: 36, unique: true })
+  wallet_id: string;
 
   @Column({ type: 'integer' })
   user_id: number;
@@ -29,6 +33,9 @@ export class Wallet {
 
   @Column({ type: 'text', nullable: true })
   private_key: string;
+
+  @Column({ type: 'text', nullable: true })
+  encrypted_private_key: string;
 
   @CreateDateColumn()
   created_at: Date;
