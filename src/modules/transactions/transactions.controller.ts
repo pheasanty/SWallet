@@ -20,7 +20,7 @@ export class TransactionsController {
   }
 
   @Get('wallet/:walletId')
-  async findByWalletId(@Param('walletId') walletId: number) {
+  async findByWalletId(@Param('walletId') walletId: string) {
     return this.transactionsService.findByWalletId(walletId);
   }
 

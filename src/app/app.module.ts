@@ -10,6 +10,8 @@ import { TokensModule } from '../modules/tokens/tokens.module';
 import { AuditModule } from '../modules/audit/audit.module';
 import { SessionsModule } from '../modules/sessions/sessions.module';
 import { NetworksModule } from '../modules/networks/networks.module';
+import { AuthModule } from '../modules/auth/auth.module';
+import { TransfersModule } from '../modules/transfers/transfers.module';
 
 @Module({
   imports: [
@@ -22,6 +24,8 @@ import { NetworksModule } from '../modules/networks/networks.module';
     AuditModule,
     SessionsModule,
     NetworksModule,
+    AuthModule,
+    TransfersModule,
   ],
   controllers: [AppController],
   providers: [AppService],

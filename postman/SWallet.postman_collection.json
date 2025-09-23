@@ -1,0 +1,440 @@
+{
+  "info": {
+    "_postman_id": "b5b6b1d4-7a2c-4b3a-b5f1-000000000000",
+    "name": "SWallet API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Colección Postman para SWallet (NestJS). Usa {{baseUrl}} como variable de entorno."
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "POST /auth/login",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alice@example.com\",\n  \"password\": \"your-password\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        }
+      ]
+    },
+    {
+      "name": "App",
+      "item": [
+        {
+          "name": "GET /",
+          "request": { "method": "GET", "url": "{{baseUrl}}/" }
+        },
+        {
+          "name": "GET /health",
+          "request": { "method": "GET", "url": "{{baseUrl}}/health" }
+        },
+        {
+          "name": "GET /info",
+          "request": { "method": "GET", "url": "{{baseUrl}}/info" }
+        }
+      ]
+    },
+    {
+      "name": "Users",
+      "item": [
+        {
+          "name": "POST /users",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alice\",\n  \"email\": \"alice@example.com\",\n  \"isActive\": true\n}"
+            },
+            "url": "{{baseUrl}}/users"
+          }
+        },
+        { "name": "GET /users", "request": { "method": "GET", "url": "{{baseUrl}}/users" } },
+        { "name": "GET /users/stats", "request": { "method": "GET", "url": "{{baseUrl}}/users/stats" } },
+        { "name": "GET /users/:id", "request": { "method": "GET", "url": "{{baseUrl}}/users/1" } },
+        {
+          "name": "PATCH /users/:id",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Alice Updated\"\n}" },
+            "url": "{{baseUrl}}/users/1"
+          }
+        },
+        { "name": "DELETE /users/:id", "request": { "method": "DELETE", "url": "{{baseUrl}}/users/1" } }
+      ]
+    },
+    {
+      "name": "Sessions",
+      "item": [
+        { "name": "GET /sessions", "request": { "method": "GET", "url": "{{baseUrl}}/sessions" } },
+        { "name": "GET /sessions/:id", "request": { "method": "GET", "url": "{{baseUrl}}/sessions/1" } },
+        { "name": "GET /sessions/user/:userId", "request": { "method": "GET", "url": "{{baseUrl}}/sessions/user/1" } },
+        { "name": "GET /sessions/user/:userId/active", "request": { "method": "GET", "url": "{{baseUrl}}/sessions/user/1/active" } },
+        { "name": "GET /sessions/user/:userId/recent?limit=10", "request": { "method": "GET", "url": "{{baseUrl}}/sessions/user/1/recent?limit=10" } },
+        { "name": "GET /sessions/user/:userId/count", "request": { "method": "GET", "url": "{{baseUrl}}/sessions/user/1/count" } },
+        { "name": "GET /sessions/token/:sessionToken", "request": { "method": "GET", "url": "{{baseUrl}}/sessions/token/sample-session-token" } },
+        { "name": "GET /sessions/refresh/:refreshToken", "request": { "method": "GET", "url": "{{baseUrl}}/sessions/refresh/sample-refresh-token" } },
+        { "name": "GET /sessions/expired", "request": { "method": "GET", "url": "{{baseUrl}}/sessions/expired" } },
+        { "name": "GET /sessions/:id/with-user", "request": { "method": "GET", "url": "{{baseUrl}}/sessions/1/with-user" } },
+        {
+          "name": "POST /sessions",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 1,\n  \"sessionToken\": \"sample-session-token\",\n  \"expiresAt\": \"2026-01-01T00:00:00.000Z\",\n  \"refreshToken\": \"sample-refresh-token\",\n  \"ipAddress\": \"127.0.0.1\",\n  \"userAgent\": \"Postman\"\n}"
+            },
+            "url": "{{baseUrl}}/sessions"
+          }
+        },
+        { "name": "PUT /sessions/:id/deactivate", "request": { "method": "PUT", "url": "{{baseUrl}}/sessions/1/deactivate" } },
+        { "name": "PUT /sessions/user/:userId/deactivate-all", "request": { "method": "PUT", "url": "{{baseUrl}}/sessions/user/1/deactivate-all" } },
+        {
+          "name": "PUT /sessions/:id/refresh",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"sessionToken\": \"new-token\",\n  \"expiresAt\": \"2026-06-01T00:00:00.000Z\"\n}" },
+            "url": "{{baseUrl}}/sessions/1/refresh"
+          }
+        },
+        {
+          "name": "PUT /sessions/:id/info",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"ipAddress\": \"127.0.0.2\",\n  \"userAgent\": \"Mozilla/5.0\"\n}" },
+            "url": "{{baseUrl}}/sessions/1/info"
+          }
+        },
+        { "name": "DELETE /sessions/cleanup", "request": { "method": "DELETE", "url": "{{baseUrl}}/sessions/cleanup" } },
+        { "name": "DELETE /sessions/:id", "request": { "method": "DELETE", "url": "{{baseUrl}}/sessions/1" } }
+      ]
+    },
+    {
+      "name": "Tokens",
+      "item": [
+        { "name": "GET /tokens", "request": { "method": "GET", "url": "{{baseUrl}}/tokens" } },
+        { "name": "GET /tokens/active", "request": { "method": "GET", "url": "{{baseUrl}}/tokens/active" } },
+        { "name": "GET /tokens/popular?limit=20", "request": { "method": "GET", "url": "{{baseUrl}}/tokens/popular?limit=20" } },
+        { "name": "GET /tokens/:id", "request": { "method": "GET", "url": "{{baseUrl}}/tokens/1" } },
+        { "name": "GET /tokens/symbol/:symbol", "request": { "method": "GET", "url": "{{baseUrl}}/tokens/symbol/ETH" } },
+        { "name": "GET /tokens/network/:network", "request": { "method": "GET", "url": "{{baseUrl}}/tokens/network/ethereum" } },
+        { "name": "GET /tokens/network/:network/active", "request": { "method": "GET", "url": "{{baseUrl}}/tokens/network/ethereum/active" } },
+        { "name": "GET /tokens/symbol/:symbol/network/:network", "request": { "method": "GET", "url": "{{baseUrl}}/tokens/symbol/USDC/network/ethereum" } },
+        { "name": "GET /tokens/contract/:contractAddress", "request": { "method": "GET", "url": "{{baseUrl}}/tokens/contract/0x0000000000000000000000000000000000000000" } },
+        { "name": "GET /tokens/:id/balances", "request": { "method": "GET", "url": "{{baseUrl}}/tokens/1/balances" } },
+        {
+          "name": "POST /tokens",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"symbol\": \"USDC\",\n  \"name\": \"USD Coin\",\n  \"network\": \"ethereum\",\n  \"contractAddress\": \"0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48\",\n  \"decimals\": 6,\n  \"logoUrl\": \"https://.../usdc.png\"\n}"
+            },
+            "url": "{{baseUrl}}/tokens"
+          }
+        },
+        { "name": "PUT /tokens/:id/activate", "request": { "method": "PUT", "url": "{{baseUrl}}/tokens/1/activate" } },
+        { "name": "PUT /tokens/:id/deactivate", "request": { "method": "PUT", "url": "{{baseUrl}}/tokens/1/deactivate" } },
+        {
+          "name": "PUT /tokens/:id/logo",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"logoUrl\": \"https://.../new.png\"\n}" },
+            "url": "{{baseUrl}}/tokens/1/logo"
+          }
+        },
+        {
+          "name": "PUT /tokens/:id",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"USD Coin (new)\"\n}" },
+            "url": "{{baseUrl}}/tokens/1"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Networks",
+      "item": [
+        { "name": "GET /networks", "request": { "method": "GET", "url": "{{baseUrl}}/networks" } },
+        { "name": "GET /networks/active", "request": { "method": "GET", "url": "{{baseUrl}}/networks/active" } },
+        { "name": "GET /networks/supported", "request": { "method": "GET", "url": "{{baseUrl}}/networks/supported" } },
+        { "name": "GET /networks/:id", "request": { "method": "GET", "url": "{{baseUrl}}/networks/1" } },
+        { "name": "GET /networks/name/:networkName", "request": { "method": "GET", "url": "{{baseUrl}}/networks/name/ethereum" } },
+        { "name": "GET /networks/chain/:chainId", "request": { "method": "GET", "url": "{{baseUrl}}/networks/chain/1" } },
+        { "name": "GET /networks/rpc/:rpcUrl", "request": { "method": "GET", "url": "{{baseUrl}}/networks/rpc/http%3A%2F%2Flocalhost%3A8545" } },
+        { "name": "GET /networks/config/:networkName", "request": { "method": "GET", "url": "{{baseUrl}}/networks/config/ethereum" } },
+        { "name": "GET /networks/:id/recommended-gas-price", "request": { "method": "GET", "url": "{{baseUrl}}/networks/1/recommended-gas-price" } },
+        {
+          "name": "POST /networks",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"networkName\": \"ethereum\",\n  \"rpcUrl\": \"http://localhost:8545\",\n  \"chainId\": 1,\n  \"blockExplorerUrl\": \"https://etherscan.io\",\n  \"gasLimit\": 21000,\n  \"minGasPrice\": 1,\n  \"maxGasPrice\": 1000000000\n}"
+            },
+            "url": "{{baseUrl}}/networks"
+          }
+        },
+        {
+          "name": "PUT /networks/:id/rpc-url",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"rpcUrl\": \"https://rpc.new\"\n}" },
+            "url": "{{baseUrl}}/networks/1/rpc-url"
+          }
+        },
+        {
+          "name": "PUT /networks/:id/gas-settings",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"gasLimit\": 30000,\n  \"minGasPrice\": 2,\n  \"maxGasPrice\": 2000000000\n}" },
+            "url": "{{baseUrl}}/networks/1/gas-settings"
+          }
+        },
+        {
+          "name": "PUT /networks/:id/block-explorer",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"blockExplorerUrl\": \"https://newscan.io\"\n}" },
+            "url": "{{baseUrl}}/networks/1/block-explorer"
+          }
+        },
+        { "name": "PUT /networks/:id/activate", "request": { "method": "PUT", "url": "{{baseUrl}}/networks/1/activate" } },
+        { "name": "PUT /networks/:id/deactivate", "request": { "method": "PUT", "url": "{{baseUrl}}/networks/1/deactivate" } },
+        {
+          "name": "PUT /networks/:id",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"networkName\": \"ethereum-main\"\n}" },
+            "url": "{{baseUrl}}/networks/1"
+          }
+        },
+        {
+          "name": "POST /networks/:id/validate-gas-price",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"gasPrice\": 100\n}" },
+            "url": "{{baseUrl}}/networks/1/validate-gas-price"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transactions",
+      "item": [
+        { "name": "GET /transactions", "request": { "method": "GET", "url": "{{baseUrl}}/transactions" } },
+        { "name": "GET /transactions/:id", "request": { "method": "GET", "url": "{{baseUrl}}/transactions/1" } },
+        { "name": "GET /transactions/wallet/:walletId", "request": { "method": "GET", "url": "{{baseUrl}}/transactions/wallet/1" } },
+        { "name": "GET /transactions/hash/:txHash", "request": { "method": "GET", "url": "{{baseUrl}}/transactions/hash/0xhash" } },
+        { "name": "GET /transactions/status/:status", "request": { "method": "GET", "url": "{{baseUrl}}/transactions/status/pending" } },
+        { "name": "GET /transactions/network/:network", "request": { "method": "GET", "url": "{{baseUrl}}/transactions/network/ethereum" } },
+        { "name": "GET /transactions/pending", "request": { "method": "GET", "url": "{{baseUrl}}/transactions/pending" } },
+        { "name": "GET /transactions/confirmed", "request": { "method": "GET", "url": "{{baseUrl}}/transactions/confirmed" } },
+        { "name": "GET /transactions/failed", "request": { "method": "GET", "url": "{{baseUrl}}/transactions/failed" } },
+        { "name": "GET /transactions/:id/with-fee", "request": { "method": "GET", "url": "{{baseUrl}}/transactions/1/with-fee" } },
+        { "name": "GET /transactions/:id/with-wallet", "request": { "method": "GET", "url": "{{baseUrl}}/transactions/1/with-wallet" } },
+        {
+          "name": "POST /transactions",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"walletId\": 1,\n  \"amount\": 0.1,\n  \"toAddress\": \"0xrecipient\",\n  \"network\": \"ethereum\",\n  \"txHash\": \"0xhash\"\n}"
+            },
+            "url": "{{baseUrl}}/transactions"
+          }
+        },
+        {
+          "name": "PUT /transactions/:id/status",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"confirmed\"\n}" },
+            "url": "{{baseUrl}}/transactions/1/status"
+          }
+        },
+        {
+          "name": "PUT /transactions/:id/tx-hash",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"txHash\": \"0xnewhash\"\n}" },
+            "url": "{{baseUrl}}/transactions/1/tx-hash"
+          }
+        },
+        { "name": "GET /transactions/:id/fee", "request": { "method": "GET", "url": "{{baseUrl}}/transactions/1/fee" } },
+        {
+          "name": "POST /transactions/:id/fee",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"feeAmount\": 0.001,\n  \"feeTokenId\": 1,\n  \"gasUsed\": 21000,\n  \"gasPrice\": 100\n}"
+            },
+            "url": "{{baseUrl}}/transactions/1/fee"
+          }
+        },
+        {
+          "name": "PUT /transactions/fee/:feeId/gas",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"gasUsed\": 22000,\n  \"gasPrice\": 120\n}" },
+            "url": "{{baseUrl}}/transactions/fee/1/gas"
+          }
+        },
+        {
+          "name": "PUT /transactions/fee/:feeId/amount",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"feeAmount\": 0.0015\n}" },
+            "url": "{{baseUrl}}/transactions/fee/1/amount"
+          }
+        },
+        { "name": "GET /transactions/fees/token/:tokenId/total", "request": { "method": "GET", "url": "{{baseUrl}}/transactions/fees/token/1/total" } },
+        { "name": "GET /transactions/fees/average-gas-price", "request": { "method": "GET", "url": "{{baseUrl}}/transactions/fees/average-gas-price" } },
+        { "name": "GET /transactions/fees/total-gas-used", "request": { "method": "GET", "url": "{{baseUrl}}/transactions/fees/total-gas-used" } },
+        { "name": "GET /transactions/fees/recent?limit=50", "request": { "method": "GET", "url": "{{baseUrl}}/transactions/fees/recent?limit=50" } }
+      ]
+    },
+    {
+      "name": "Wallets",
+      "item": [
+        { "name": "GET /wallets", "request": { "method": "GET", "url": "{{baseUrl}}/wallets" } },
+        { "name": "GET /wallets/:id", "request": { "method": "GET", "url": "{{baseUrl}}/wallets/1" } },
+        { "name": "GET /wallets/user/:userId", "request": { "method": "GET", "url": "{{baseUrl}}/wallets/user/1" } },
+        { "name": "GET /wallets/network/:network", "request": { "method": "GET", "url": "{{baseUrl}}/wallets/network/ethereum" } },
+        { "name": "GET /wallets/:id/transactions", "request": { "method": "GET", "url": "{{baseUrl}}/wallets/1/transactions" } },
+        { "name": "GET /wallets/:id/balances", "request": { "method": "GET", "url": "{{baseUrl}}/wallets/1/balances" } },
+        {
+          "name": "POST /wallets",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"userId\": 1,\n  \"network\": \"ethereum\",\n  \"address\": \"0xaddress\",\n  \"privateKey\": \"encrypted-key\"\n}"
+            },
+            "url": "{{baseUrl}}/wallets"
+          }
+        },
+        {
+          "name": "PUT /wallets/:id/private-key",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"privateKey\": \"new-encrypted-key\"\n}" },
+            "url": "{{baseUrl}}/wallets/1/private-key"
+          }
+        },
+        { "name": "DELETE /wallets/:id/private-key", "request": { "method": "DELETE", "url": "{{baseUrl}}/wallets/1/private-key" } },
+        { "name": "DELETE /wallets/:id", "request": { "method": "DELETE", "url": "{{baseUrl}}/wallets/1" } },
+        { "name": "GET /wallets/:id/balances/all", "request": { "method": "GET", "url": "{{baseUrl}}/wallets/1/balances/all" } },
+        { "name": "GET /wallets/:id/balances/non-zero", "request": { "method": "GET", "url": "{{baseUrl}}/wallets/1/balances/non-zero" } },
+        {
+          "name": "PUT /wallets/:id/balances/:tokenId",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"balance\": 123.45\n}" },
+            "url": "{{baseUrl}}/wallets/1/balances/1"
+          }
+        },
+        {
+          "name": "POST /wallets/:id/balances/:tokenId/add",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"amount\": 10\n}" },
+            "url": "{{baseUrl}}/wallets/1/balances/1/add"
+          }
+        },
+        {
+          "name": "POST /wallets/:id/balances/:tokenId/subtract",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"amount\": 5\n}" },
+            "url": "{{baseUrl}}/wallets/1/balances/1/subtract"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Audit",
+      "item": [
+        { "name": "GET /audit", "request": { "method": "GET", "url": "{{baseUrl}}/audit" } },
+        { "name": "GET /audit/recent?limit=100", "request": { "method": "GET", "url": "{{baseUrl}}/audit/recent?limit=100" } },
+        { "name": "GET /audit/:id", "request": { "method": "GET", "url": "{{baseUrl}}/audit/1" } },
+        { "name": "GET /audit/user/:userId", "request": { "method": "GET", "url": "{{baseUrl}}/audit/user/1" } },
+        { "name": "GET /audit/user/:userId/recent?limit=50", "request": { "method": "GET", "url": "{{baseUrl}}/audit/user/1/recent?limit=50" } },
+        { "name": "GET /audit/action/:action", "request": { "method": "GET", "url": "{{baseUrl}}/audit/action/login" } },
+        { "name": "GET /audit/user/:userId/action/:action", "request": { "method": "GET", "url": "{{baseUrl}}/audit/user/1/action/login" } },
+        { "name": "GET /audit/date-range?startDate=&endDate=", "request": { "method": "GET", "url": "{{baseUrl}}/audit/date-range?startDate=2025-01-01&endDate=2025-12-31" } },
+        { "name": "GET /audit/:id/with-user", "request": { "method": "GET", "url": "{{baseUrl}}/audit/1/with-user" } },
+        {
+          "name": "POST /audit/log",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"userId\": 1,\n  \"action\": \"login\",\n  \"metadata\": {\n    \"ip\": \"127.0.0.1\"\n  }\n}" },
+            "url": "{{baseUrl}}/audit/log"
+          }
+        },
+        {
+          "name": "POST /audit/user-action",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"userId\": 1,\n  \"action\": \"transfer\",\n  \"metadata\": {\n    \"amount\": 100\n  }\n}" },
+            "url": "{{baseUrl}}/audit/user-action"
+          }
+        },
+        {
+          "name": "POST /audit/system-action",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": { "mode": "raw", "raw": "{\n  \"action\": \"sync\",\n  \"metadata\": {\n    \"source\": \"cron\"\n  }\n}" },
+            "url": "{{baseUrl}}/audit/system-action"
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:3000/api",
+      "type": "string"
+    }
+  ]
+}
+
+
+
