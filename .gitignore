@@ -19,6 +19,7 @@ Thumbs.db
 /coverage
 /.nyc_output
 
+temp_auto_push.bat
 # IDEs and editors
 /.idea
 .project
@@ -31,7 +32,6 @@ Thumbs.db
 # IDE - VSCode
 
 # dotenv environment variable files
-.env
 .env.development.local
 .env.test.local
 .env.production.local
@@ -40,3 +40,5 @@ Thumbs.db
 # temp
 /tmp
 /temp
+.gitignore
+temp_interactive_push.bat
