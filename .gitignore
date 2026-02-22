@@ -19,6 +19,7 @@ Thumbs.db
 /coverage
 /.nyc_output
 
+temp_auto_push.bat
 # IDEs and editors
 /.idea
 .project
